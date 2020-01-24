@@ -1,8 +1,5 @@
-/gradle
 /build
 /.gradle
 /.idea
 *.properties
-*.gradle
-*.bat
 *.DS_Store
