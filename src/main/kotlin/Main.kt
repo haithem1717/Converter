@@ -1,46 +1,35 @@
-import Character.*
+enum class Digit(val value: Int) {
+    I(1), V(5), X(10), L(50), C(100), D(500), M(1000);
 
-enum class Character() {
-    I, V, X, L, C, D, M
+    companion object {
+        private val MAPPING = values().associate { digit -> digit.name[0] to digit.value }
+
+        fun valueFor(c: Char): Int? = MAPPING[c]
+    }
 }
 
-fun romanToNumber(number: String): Int {
-    var sum = 0
-    var currentCharValue = 0
-    var previousCharValue = 0
-    for (char in number.reversed()) {
-        if (char.toString() == I.toString())
-            currentCharValue = 1
-        else if (char.toString() == V.toString())
-            currentCharValue = 5
-        else if (char.toString() == X.toString())
-            currentCharValue = 10
-        else if (char.toString() == L.toString())
-            currentCharValue = 50
-        else if (char.toString() == C.toString())
-            currentCharValue = 100
-        else if (char.toString() == D.toString())
-            currentCharValue = 500
-        else if (char.toString() == M.toString())
-            currentCharValue = 1000
+infix fun Int.isLessThan(that: Int): Boolean = this < that
 
+private data class Accumulator(val value: Int = 0, val previousCharValue: Int = 0)
 
-        if (currentCharValue >= previousCharValue)
-            sum += currentCharValue
-        else
-            sum -= currentCharValue
-        previousCharValue = currentCharValue
-    }
-    return sum
+fun String.parseAsRomanNumeral(): Int {
+    return reversed().asSequence()
+        .fold(initial = Accumulator()) { (value, previousCharValue), currentChar ->
+            val currentCharValue = Digit.valueFor(currentChar) ?: throw IllegalStateException()
+            return@fold Accumulator(
+                value = when {
+                    currentCharValue >= previousCharValue -> value + currentCharValue
+                    else -> value - currentCharValue
+                },
+                previousCharValue = currentCharValue
+            )
+        }
+        .value
 }
 
 fun main() {
-    val listOfRomanNumerals = listOf<String>(
+    sequenceOf(
         "CMXXVIII", "DCCCXXXV", "MMDCLXXXII", "CVIII", "MMMCMXCIX",
         "MDCCCXXVIII", "CDXXXVIII"
-    )
-
-    listOfRomanNumerals.forEach {
-        println(romanToNumber(it))
-    }
+    ).map(String::parseAsRomanNumeral).forEach(::println)
 }
