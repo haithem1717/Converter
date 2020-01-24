@@ -1,28 +1,37 @@
-enum class Character {
+import Character.*
+
+enum class Character() {
     I, V, X, L, C, D, M
 }
-fun romanToNumber(number: String){
-    
-}
-/*fun convertToNumbers(number:String):Int {
-    when (number) {
-        "I" -> return 1
-        "II" -> return 2
-        "III" -> return 3
-        "IV" -> return 4
-        "V" -> return 5
-        "VI" -> return 6
-        "VII" -> return 7
-        "VIII" -> return 8
-        "IX" -> return 9
-        "X" -> return 10
-        else -> { // Note the block
-            print("Invalid input")
-        }
+
+fun romanToNumber(number: String): Int {
+    var sum = 0
+    var currentCharValue = 0
+    var previousCharValue = 0
+    for (char in number.reversed()) {
+        if (char.toString() == I.toString())
+            currentCharValue = 1
+        else if (char.toString() == V.toString())
+            currentCharValue =5
+        else if (char.toString() == X.toString())
+            currentCharValue = 10
+        else if (char.toString() == L.toString())
+            currentCharValue = 50
+        else if (char.toString() == C.toString())
+            currentCharValue = 100
+        else if (char.toString() == D.toString())
+            currentCharValue = 500
+        else if (char.toString() == M.toString())
+            currentCharValue = 1000
+
+        if(currentCharValue >= previousCharValue)
+            sum += currentCharValue
+        else
+            sum -= currentCharValue
+        previousCharValue = currentCharValue
     }
-    return 0
-}*/
+    return sum
+}
 
 fun main() {
-    println("Test!")
 }
