@@ -12,7 +12,7 @@ fun romanToNumber(number: String): Int {
         if (char.toString() == I.toString())
             currentCharValue = 1
         else if (char.toString() == V.toString())
-            currentCharValue =5
+            currentCharValue = 5
         else if (char.toString() == X.toString())
             currentCharValue = 10
         else if (char.toString() == L.toString())
@@ -24,7 +24,8 @@ fun romanToNumber(number: String): Int {
         else if (char.toString() == M.toString())
             currentCharValue = 1000
 
-        if(currentCharValue >= previousCharValue)
+
+        if (currentCharValue >= previousCharValue)
             sum += currentCharValue
         else
             sum -= currentCharValue
@@ -34,4 +35,12 @@ fun romanToNumber(number: String): Int {
 }
 
 fun main() {
+    val listOfRomanNumerals = listOf<String>(
+        "CMXXVIII", "DCCCXXXV", "MMDCLXXXII", "CVIII", "MMMCMXCIX",
+        "MDCCCXXVIII", "CDXXXVIII"
+    )
+
+    listOfRomanNumerals.forEach {
+        println(romanToNumber(it))
+    }
 }
