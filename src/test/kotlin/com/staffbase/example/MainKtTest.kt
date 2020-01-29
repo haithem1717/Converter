@@ -7,8 +7,8 @@ import parseIntToRoman
 import parseAsRomanNumeral
 import kotlin.test.assertEquals
 
-fun parseAsDecimal(n: Int) = n.toString()
-fun String.parseAsRomanNumeral() = toInt()
+/*fun parseAsDecimal(n: Int) = n.toString()
+fun String.parseAsRomanNumeral() = toInt()*/
 
 internal class MainKtTest {
     @ParameterizedTest(name = "{index} => input(roman): {1} expected(decimal): {0} ")
@@ -22,14 +22,18 @@ internal class MainKtTest {
     }
 
     @ParameterizedTest( name = "{index} => input(decimal): {1} expected(roman): {0} ")
-    @CsvSource( "MMMCM, 3900")
-    fun `can convert to roman numerals`(roman : String, decimal: Int){
-        assertEquals(expected = roman, actual = parseIntToRoman(decimal))
+    @CsvSource(
+        "438, CDXXXVIII",
+        "1828, MDCCCXXVIII",
+        "3999, MMMCMXCIX"
+    )
+    fun `can convert to roman numerals`( decimal: Int, roman : String){
+        assertEquals(expected = roman, actual = parseIntToRoman(decimal).asString)
     }
 
     @RepeatedTest(3998)
     fun `forth and back should work`(index: Int) {
         val number = index + 1
-        assertEquals(expected = number, actual = parseIntToRoman(number).parseAsRomanNumeral())
+        assertEquals(expected = number, actual = parseIntToRoman(number).asString.parseAsRomanNumeral())
     }
 }
