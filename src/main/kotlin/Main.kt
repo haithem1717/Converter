@@ -48,9 +48,9 @@ fun parseIntToRoman(number: Int): Roman {
 }
 
 fun main() {
-    /*sequenceOf(
+    sequenceOf(
         "CMXXVIII", "DCCCXXXV", "MMDCLXXXII", "CVIII", "MMMCMXCIX",
         "MDCCCXXVIII", "CDXXXVIII"
-    ).map(String::parseAsRomanNumeral).forEach(::println)*/
+    ).map(String::parseAsRomanNumeral).forEach(::println)
     println(parseIntToRoman(1234).asString)
 }
